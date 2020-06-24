@@ -37,7 +37,7 @@ const DialogsList: FC = () => {
   });
 
   return (
-    <ul>
+    <ul className="trade-dialog-list">
       <div>{renderItems}</div>
     </ul>
   );
