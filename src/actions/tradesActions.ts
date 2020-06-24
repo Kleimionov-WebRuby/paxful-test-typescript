@@ -4,6 +4,7 @@ import {
   GET_TRADES_SUCCESS,
   GET_TRADES_ERROR,
   DELETE_TRADES,
+  CHANGE_TRADE_STATUS,
 } from '../constants/actionTypes';
 import delayForResponse from '../helper/delayForResponse';
 
@@ -37,7 +38,7 @@ type GetTradesErrorType = (
   type: string,
   payload: string,
 };
-type DeleteTradeType = (payload: string) => Results;
+type TypeOnlyWithId = (payload: string) => Results;
 
 const getTradesRequest: GetTradesRequestType = () => ({
   type: GET_TRADES_REQUEST,
@@ -53,8 +54,13 @@ const getTradesError: GetTradesErrorType = (payload) => ({
   payload,
 });
 
-export const deleteTrade: DeleteTradeType = (payload) => ({
+export const deleteTrade: TypeOnlyWithId = (payload) => ({
   type: DELETE_TRADES,
+  payload: { tradeId: payload },
+});
+
+export const changeTradeStatus: TypeOnlyWithId = (payload) => ({
+  type: CHANGE_TRADE_STATUS,
   payload: { tradeId: payload },
 });
 

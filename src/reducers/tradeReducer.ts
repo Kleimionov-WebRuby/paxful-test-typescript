@@ -7,6 +7,7 @@ import {
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE_ERROR,
   CHANGE_STATUS_ONREAD,
+  CHANGE_TRADE_STATUS
 } from '../constants/actionTypes';
 import { Results } from 'actions/tradesActions';
 import { Trade } from 'entries/trade';
@@ -88,6 +89,19 @@ const trades: Reducer = (state = initialState, action) => {
       newTradesArray.splice(tradeOnReadIndex, 1, newTradeAfterOnRead);
 
       return { ...state, items: newTradesArray };
+    }
+    case CHANGE_TRADE_STATUS: {
+      const newTradesArray = [...state.items];
+      const tradeWithNewStatus = getTrade(newTradesArray, action);
+      const tradeWithNewStatusIndex = getTradeIndex(newTradesArray, action);
+      const newTradeAfterChangeStatus = {
+        ...tradeWithNewStatus,
+        isPaid: !tradeWithNewStatus.isPaid,
+      };
+
+      newTradesArray.splice(tradeWithNewStatusIndex, 1, newTradeAfterChangeStatus);
+
+      return{ ...state, items: newTradesArray }
     }
     default:
       return state;

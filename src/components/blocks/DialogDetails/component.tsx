@@ -1,8 +1,9 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+import React, { FC, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { SELLER_TYPE } from 'constants/account';
 import ChangeUserButton from 'components/blocks/ChangeUserButton';
 import Button from 'components/controls/Button';
+import { changeTradeStatus } from 'actions/tradesActions';
 import FromServer from 'components/blocks/FromServer';
 import { Store } from 'entries/store';
 import Rating from '../Rating';
@@ -13,6 +14,8 @@ import UserAvatar from '../UserAvatar';
 const DialogDetails: FC = () => {
   const account = useSelector((state: Store) => state.account);
   const currentTrade = useSelector((state: Store) => state.currentTrade.item);
+  const dispatch = useDispatch();
+
   const {
     name,
     rating,
@@ -22,24 +25,24 @@ const DialogDetails: FC = () => {
     tradeHash,
   } = currentTrade;
 
+  const handleOnClick = useCallback(() => {
+    if (!isPaid) dispatch(changeTradeStatus(currentTrade.id));
+  }, [currentTrade.id]);
+
   return (
     <>
       <div className="trades-dialogs__details-hearer">
         You are trading with <span>{name}</span>
         <div className="trades-dialogs__start-time">Started 23 minutes ago</div>
-        {!isPaid ? (
+        {account === SELLER_TYPE && !isPaid && (
           <Button
             text="Release bitcoins"
             customClass="grin-btn medium"
-            onClick={() => {
-              console.log('Hello everyone!');
-            }}
+            onClick={handleOnClick}
             htmlType="button"
-            disabled={account === SELLER_TYPE && !isPaid}
           />
-        ) : (
-          'You already released bitcoins'
         )}
+        {account === SELLER_TYPE && isPaid && 'You are released bitcoins!'}
       </div>
       <ul className="trades-dialogs__details-body">
         <li>
