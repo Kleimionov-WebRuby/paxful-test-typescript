@@ -1,4 +1,6 @@
 import React, { FC, useCallback } from 'react';
+import Moment from 'react-moment';
+import 'moment-timezone';
 import { useSelector, useDispatch } from 'react-redux';
 import { SELLER_TYPE } from 'constants/account';
 import ChangeUserButton from 'components/blocks/ChangeUserButton';
@@ -23,6 +25,7 @@ const DialogDetails: FC = () => {
     isPaid,
     numberOfTrades,
     tradeHash,
+    startAt,
   } = currentTrade;
 
   const handleOnClick = useCallback(() => {
@@ -33,7 +36,12 @@ const DialogDetails: FC = () => {
     <>
       <div className="trades-dialogs__details-hearer">
         You are trading with <span>{name}</span>
-        <div className="trades-dialogs__start-time">Started 23 minutes ago</div>
+        <div className="trades-dialogs__start-time">
+          Started{' '}
+          <Moment tz="Russia/Moscow" fromNow interval={10000}>
+            {startAt}
+          </Moment>
+        </div>
         {account === SELLER_TYPE && !isPaid && (
           <Button
             text="Release bitcoins"
