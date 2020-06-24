@@ -7,11 +7,23 @@ type Props = {
   text: string,
   onClick: any,
   htmlType: 'button' | 'submit' | 'reset',
+  disabled: boolean,
 };
 
-const Button: FC<Props> = ({ customClass = '', text, onClick, htmlType }) => {
+const Button: FC<Props> = ({
+  customClass = '',
+  text,
+  onClick,
+  htmlType,
+  disabled,
+}) => {
   return (
-    <button type={htmlType} onClick={onClick} className={`btn ${customClass}`}>
+    <button
+      type={htmlType}
+      onClick={onClick}
+      className={`btn ${customClass}`}
+      disabled={!disabled}
+    >
       {text}
     </button>
   );

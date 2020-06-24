@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { BUYER_TYPE } from 'constants/account';
+import { SELLER_TYPE } from 'constants/account';
 import UserAvatar from '../UserAvatar';
 import { Trade } from 'entries/trade';
 import { Store } from 'entries/store';
@@ -23,7 +23,7 @@ const DialogCard: FC<Props> = ({ item, isActive }) => {
     newMessage,
   } = item;
   const account = useSelector<Store, string>((state) => state.account);
-  const avatarImgLink = account === BUYER_TYPE ? interlocutorAvatar : avatar;
+  const avatarImgLink = account === SELLER_TYPE ? interlocutorAvatar : avatar;
   const shallowCopyNewMessages: { [key: string]: boolean } = newMessage;
 
   if (isActive) cardClasses += ' active';

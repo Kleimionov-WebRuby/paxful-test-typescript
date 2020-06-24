@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { SELLER_TYPE } from 'constants/account';
 import ChangeUserButton from 'components/blocks/ChangeUserButton';
 import Button from 'components/controls/Button';
 import FromServer from 'components/blocks/FromServer';
@@ -10,6 +11,7 @@ import './style.css';
 import UserAvatar from '../UserAvatar';
 
 const DialogDetails: FC = () => {
+  const account = useSelector((state: Store) => state.account);
   const currentTrade = useSelector((state: Store) => state.currentTrade.item);
   const {
     name,
@@ -25,14 +27,19 @@ const DialogDetails: FC = () => {
       <div className="trades-dialogs__details-hearer">
         You are trading with <span>{name}</span>
         <div className="trades-dialogs__start-time">Started 23 minutes ago</div>
-        <Button
-          text="Release bitcoins"
-          customClass="grin-btn medium"
-          onClick={() => {
-            console.log('Hello everyone!');
-          }}
-          htmlType="button"
-        />
+        {!isPaid ? (
+          <Button
+            text="Release bitcoins"
+            customClass="grin-btn medium"
+            onClick={() => {
+              console.log('Hello everyone!');
+            }}
+            htmlType="button"
+            disabled={account === SELLER_TYPE && !isPaid}
+          />
+        ) : (
+          'You already released bitcoins'
+        )}
       </div>
       <ul className="trades-dialogs__details-body">
         <li>

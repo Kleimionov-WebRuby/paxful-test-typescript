@@ -20,3 +20,10 @@
 .grin-btn:hover{
   background-color: #5abd87;
 }
+
+.btn:disabled,
+.btn[disabled],
+.btn[disabled]:hover{
+  background-color: #52d48c;
+  opacity: 0.6;
+}

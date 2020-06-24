@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { BUYER_TYPE } from 'constants/account';
+import { SELLER_TYPE } from 'constants/account';
 import { Message as MessageType } from 'entries/trade';
 import { Store } from 'entries/store';
 
@@ -15,7 +15,7 @@ type Props = {
 const Message: FC<Props> = ({ message, avatar, interlocutorAvatar }) => {
   const account = useSelector((state: Store) => state.account);
   const { type, text, date } = message;
-  const avatarImgLink = type === BUYER_TYPE ? avatar : interlocutorAvatar;
+  const avatarImgLink = type === SELLER_TYPE ? avatar : interlocutorAvatar;
 
   return (
     <div className={`message-block ${type === account ? 'right' : ''}`}>
