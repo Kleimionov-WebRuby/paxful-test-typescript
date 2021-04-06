@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { DataFromServer } from 'entries/dataFromServer';
-import useGetInformation from 'api/hooks/information';
+import useGetInformation from 'api/information';
 
 import { useClasses } from './style';
 
