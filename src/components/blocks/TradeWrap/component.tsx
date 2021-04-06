@@ -5,7 +5,7 @@ import setCurrentTrade from 'store/actions/currentTradeAction';
 import getTradeById from 'store/selectors';
 import isObjectEmpty from 'helper/isObjectEmpty';
 import Loader from 'components/controls/Loader';
-import { Store } from 'entries/store';
+import { RootState } from 'store/reducers';
 import { NOT_FOUND } from 'constants/index';
 
 type Props = {
@@ -13,11 +13,11 @@ type Props = {
 };
 
 const TradeWrap: FC<Props> = ({ children }) => {
-  const { id } = useParams();
-  const receivedState = useSelector((state: Store) => state);
-  const currentTrade = useSelector((state: Store) => state.currentTrade);
-
   const dispatch = useDispatch();
+  const { id } = useParams<{ id: string }>();
+
+  const receivedState = useSelector((state: RootState) => state);
+  const currentTrade = useSelector((state: RootState) => state.currentTrade);
 
   const trade = getTradeById(receivedState, id);
 

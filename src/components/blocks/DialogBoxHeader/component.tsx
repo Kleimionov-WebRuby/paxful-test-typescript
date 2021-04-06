@@ -3,7 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import setCurrentTrade from 'store/actions/currentTradeAction';
 import { deleteTrade } from 'store/actions/tradesActions';
-import { Store } from 'entries/store';
+import { RootState } from 'store/reducers';
 import { Trade } from 'entries/trade';
 import Rating from '../Rating';
 
@@ -13,11 +13,13 @@ const DialogBoxHeader: FC = () => {
   const { id } = useParams();
   const { push } = useHistory();
   const dispatch = useDispatch();
-  const trades = useSelector((state: Store) => state.trades.items);
+  const trades = useSelector((state: RootState) => state.trades.items);
   // Filter values to exclude the current element,
   // since it doesn't need to be considered when deleting it
   const filteredTrades = trades.filter((item: Trade) => item.id !== id);
-  const currentTrade = useSelector((state: Store) => state.currentTrade.item);
+  const currentTrade = useSelector(
+    (state: RootState) => state.currentTrade.item,
+  );
 
   const { name, payMethod, rating } = currentTrade;
 

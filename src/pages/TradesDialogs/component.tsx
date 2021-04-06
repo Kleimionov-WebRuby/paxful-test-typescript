@@ -5,7 +5,7 @@ import { getTrades } from 'store/actions/tradesActions';
 import Hidden from '@material-ui/core/Hidden';
 import 'simplebar';
 import 'simplebar/dist/simplebar.min.css';
-import { Store } from 'entries/store';
+import { RootState } from 'store/reducers';
 import {
   DialogsList,
   DialogBox,
@@ -14,20 +14,17 @@ import {
   TradeWrap,
   MobileHeader,
 } from 'components/blocks';
-import Loader from 'components/controls/Loader';
 import './style.css';
 
 const TradesDialogs: React.FC = () => {
   const dispatch = useDispatch();
 
-  const isLoading = useSelector((state: Store) => state.trades.isLoading);
-  const trades = useSelector((state: Store) => state.trades.items);
+  const trades = useSelector((state: RootState) => state.trades.items);
 
   useEffect(() => {
     dispatch(getTrades(`http://localhost:3000/dialogsItems.json`));
-  }, [dispatch]);
-
-  if (isLoading) return <Loader />;
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

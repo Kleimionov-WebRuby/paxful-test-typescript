@@ -24,20 +24,22 @@ type Reducer = (
 
 const currentTrade: Reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_TRADE_REQUEST:
+    case SET_TRADE_REQUEST: {
       return {
         ...state,
         isLoading: action.payload.tradeId !== action.payload.prevId && true,
       };
-    case SET_TRADE_SUCCESS:
+    }
+    case SET_TRADE_ERROR: {
+      return { ...state, errors: action.payload, isLoading: false };
+    }
+    case SET_TRADE_SUCCESS: {
       return {
         ...state,
         item: action.payload,
         isLoading: false,
       };
-    case SET_TRADE_ERROR:
-      return { ...state, errors: action.payload, isLoading: false };
-
+    }
     default:
       return state;
   }

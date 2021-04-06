@@ -1,38 +1,37 @@
-import React, { FC, useRef, useEffect } from 'react';
-import Input from 'components/controls/Input';
-import { Store } from 'entries/store';
+import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+
+import Input from 'components/controls/Input';
+import SubmitPreloader from 'components/controls/SubmitPreloader';
+import { RootState } from 'store/reducers';
 
 import './style.css';
 
 type Props = {
-  handleFormSubmit: any,
-  handleFieldChange: any,
   message: string,
+  handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
+  handleFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
 };
 
-const TradeChatForm: FC<Props> = ({
+const TradeChatForm = ({
+  message,
   handleFormSubmit,
   handleFieldChange,
-  message,
-}) => {
+}: Props) => {
   const chatBottomRef = useRef<HTMLFormElement>(null);
 
-  const scrollToBottom = () => {
-    if (chatBottomRef && chatBottomRef.current) {
+  const isSendingMessage = useSelector(
+    (state: RootState) => state.trades.isSendingMessage,
+  );
+
+  useEffect(() => {
+    if (chatBottomRef.current) {
       chatBottomRef.current.scrollIntoView({
         behavior: 'auto',
       });
     }
-  };
+  }, []);
 
-  const isSendingMessage = useSelector(
-    (state: Store) => state.trades.isSendingMessage,
-  );
-
-  useEffect(() => {
-    scrollToBottom();
-  });
   return (
     <form
       ref={chatBottomRef}
@@ -40,23 +39,16 @@ const TradeChatForm: FC<Props> = ({
       onSubmit={handleFormSubmit}
     >
       <Input
-        name="message"
         type="text"
+        name="message"
         value={message}
         placeholder="Type your message..."
         onInputChange={handleFieldChange}
       />
       <button type="submit" className="trade-chat__submit">
-        send
+        Send
       </button>
-      {isSendingMessage ? (
-        <div className="message-loader-block">
-          <img
-            src="https://www.ulysse-nardin.com/pub/static/frontend/Isobar/ulysse_nardin/ru_RU/images/loader-spin.gif"
-            alt="message-loader"
-          />
-        </div>
-      ) : null}
+      {isSendingMessage && <SubmitPreloader />}
     </form>
   );
 };

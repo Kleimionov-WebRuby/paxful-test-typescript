@@ -1,34 +1,40 @@
 import React, { FC, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BUYER_TYPE, SELLER_TYPE } from 'constants/account';
 import {
   sendMessage,
   changeMessageStatusOnRead,
 } from 'store/actions/messageAction';
-import { Store } from 'entries/store';
+import { RootState } from 'store/reducers';
 import { Message as MessageType } from 'entries/trade';
 import useInput from 'hooks/useInput';
 import TradeChatForm from 'components/forms/TradeChatForm';
 import TransformDate from 'helper/transformDate';
-import { useParams } from 'react-router-dom';
 import Message from '../Message';
 
 import './style.css';
 
+type FormI = {
+  message: string,
+};
+
 const DialogBoxBody: FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 
-  const currentTrade = useSelector((state: Store) => state.currentTrade.item);
-  const account = useSelector((state: Store) => state.account);
-  const errors = useSelector((state: Store) => state.trades.errors);
+  const account = useSelector((state: RootState) => state.account);
+  const errors = useSelector((state: RootState) => state.trades.errors);
+  const currentTrade = useSelector(
+    (state: RootState) => state.currentTrade.item,
+  );
 
   const { messages, interlocutorAvatar, avatar } = currentTrade;
   const shallowCopyNewMessages: { [key: string]: boolean } =
     currentTrade.newMessage;
 
-  const [values, handleFieldChange, reset] = useInput({
+  const [values, handleFieldChange, reset] = useInput<FormI>({
     message: '',
   });
 
@@ -56,7 +62,7 @@ const DialogBoxBody: FC = () => {
 
   const eventHandler = useCallback(() => {
     return errors.forEach((error) => {
-      toast.error(`${error}`);
+      toast.error(error);
     });
   }, [errors]);
 

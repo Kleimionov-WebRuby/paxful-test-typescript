@@ -52,23 +52,8 @@
   flex-direction: column;
 }
 
-.trades-dialogs__details-title{
-  text-transform: uppercase;
-  font-weight: 600;
-  font-size: 16px;
-  margin-bottom: 12px;
-}
-
 .trades-dialogs__details-body li .trade-status{
   font-size: 16px;
-}
-
-.trades-dialogs__details-text{
-  color: #606060;
-}
-
-.trades-dialogs__details-text.cost{
-  font-weight: 600;
 }
 
 .trades-dialogs__change-user{

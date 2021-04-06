@@ -1,7 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 
-const useInput = (initialValue: any) => {
+type Response<T> = [
+  T,
+  (e: React.ChangeEvent<HTMLInputElement>) => void,
+  () => void,
+];
+
+const useInput = <T>(initialValue: T): Response<T> => {
   const [values, setValues] = useState(initialValue);
 
   const handleFieldChange = (e: React.ChangeEvent<HTMLInputElement>) => {

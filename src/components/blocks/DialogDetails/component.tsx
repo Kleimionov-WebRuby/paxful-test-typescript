@@ -1,21 +1,25 @@
 import React, { FC, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { changeTradeStatus } from 'store/actions/tradesActions';
 import { SELLER_TYPE } from 'constants/account';
 import ChangeUserButton from 'components/blocks/ChangeUserButton';
-import Button from 'components/controls/Button';
-import { changeTradeStatus } from 'store/actions/tradesActions';
 import FromServer from 'components/blocks/FromServer';
-import { Store } from 'entries/store';
-import Rating from '../Rating';
+import UserAvatar from 'components/blocks/UserAvatar';
+import Rating from 'components/blocks/Rating';
+import InfoField from 'components/controls/InfoField';
+import Button from 'components/controls/Button';
+import { RootState } from 'store/reducers';
 
 import './style.css';
-import UserAvatar from '../UserAvatar';
 
 const DialogDetails: FC = () => {
-  const account = useSelector((state: Store) => state.account);
-  const currentTrade = useSelector((state: Store) => state.currentTrade.item);
+  const account = useSelector((state: RootState) => state.account);
+  const currentTrade = useSelector(
+    (state: RootState) => state.currentTrade.item,
+  );
   const dispatch = useDispatch();
 
   const {
@@ -39,7 +43,7 @@ const DialogDetails: FC = () => {
         You are trading with <span>{name}</span>
         <div className="trades-dialogs__start-time">
           Started{' '}
-          <Moment tz="Russia/Moscow" fromNow interval={10000}>
+          <Moment fromNow interval={10000}>
             {startAt}
           </Moment>
         </div>
@@ -58,28 +62,18 @@ const DialogDetails: FC = () => {
           <UserAvatar imageLink={avatar} />
           <Rating rating={rating} />
         </li>
-        <li>
-          <div className="trades-dialogs__details-title"># of trades</div>
-          <div className="trades-dialogs__details-text">{numberOfTrades}</div>
-        </li>
-        <li>
-          <div className="trades-dialogs__details-title">trade status</div>
-          <span className={`trade-status ${isPaid ? 'paid' : null}`}>
-            {isPaid ? 'paid' : 'not paid'}
-          </span>
-        </li>
-        <li>
-          <div className="trades-dialogs__details-title">trade hash</div>
-          <div className="trades-dialogs__details-text">{tradeHash}</div>
-        </li>
-        <li>
-          <div className="trades-dialogs__details-title">amount USD</div>
-          <div className="trades-dialogs__details-text cost">25.00</div>
-        </li>
-        <li>
-          <div className="trades-dialogs__details-title">amount BTC</div>
-          <div className="trades-dialogs__details-text">0.00234524</div>
-        </li>
+        <InfoField name="# of trades" value={numberOfTrades} />
+        <InfoField
+          name="Trade status"
+          value={
+            <span className={`trade-status ${isPaid ? 'paid' : null}`}>
+              {isPaid ? 'paid' : 'not paid'}
+            </span>
+          }
+        />
+        <InfoField name="Trade hash" value={tradeHash} />
+        <InfoField name="Amount USD" value="25.00" />
+        <InfoField name="Amount BTC" value="0.00234524" />
       </ul>
       <div className="information-from-server">
         <FromServer />
