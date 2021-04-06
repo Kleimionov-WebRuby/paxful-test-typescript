@@ -1,10 +1,9 @@
 import { createSelector } from 'reselect';
-import { RootState } from 'store/reducers';
 import { Trade } from 'entries/trade';
 import { NOT_FOUND } from 'constants/index';
 
-const trades = (state: RootState, id: string) => ({
-  items: state.trades.items,
+const trades = (state: Trade[], id: string) => ({
+  items: state,
   id,
 });
 

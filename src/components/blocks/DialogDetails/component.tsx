@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
+import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
 import { changeTradeStatus } from 'store/actions/tradesActions';
 import { SELLER_TYPE } from 'constants/account';
 import ChangeUserButton from 'components/blocks/ChangeUserButton';
@@ -11,15 +12,13 @@ import UserAvatar from 'components/blocks/UserAvatar';
 import Rating from 'components/blocks/Rating';
 import InfoField from 'components/controls/InfoField';
 import Button from 'components/controls/Button';
-import { RootState } from 'store/reducers';
+import { getAccount } from 'store/selectors/accountSelector';
 
 import './style.css';
 
 const DialogDetails: FC = () => {
-  const account = useSelector((state: RootState) => state.account);
-  const currentTrade = useSelector(
-    (state: RootState) => state.currentTrade.item,
-  );
+  const account = useSelector(getAccount);
+  const currentTrade = useSelector(getCurrentTrade);
   const dispatch = useDispatch();
 
   const {

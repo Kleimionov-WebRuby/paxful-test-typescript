@@ -2,24 +2,24 @@ import React, { FC, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import setCurrentTrade from 'store/actions/currentTradeAction';
+import { getTradesList } from 'store/selectors/tradesSelectors';
 import { deleteTrade } from 'store/actions/tradesActions';
-import { RootState } from 'store/reducers';
+import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
 import { Trade } from 'entries/trade';
 import Rating from '../Rating';
 
 import './style.css';
 
 const DialogBoxHeader: FC = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const { push } = useHistory();
   const dispatch = useDispatch();
-  const trades = useSelector((state: RootState) => state.trades.items);
+  const trades = useSelector(getTradesList);
+
   // Filter values to exclude the current element,
   // since it doesn't need to be considered when deleting it
   const filteredTrades = trades.filter((item: Trade) => item.id !== id);
-  const currentTrade = useSelector(
-    (state: RootState) => state.currentTrade.item,
-  );
+  const currentTrade = useSelector(getCurrentTrade);
 
   const { name, payMethod, rating } = currentTrade;
 

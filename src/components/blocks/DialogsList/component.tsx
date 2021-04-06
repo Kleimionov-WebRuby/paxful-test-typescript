@@ -1,16 +1,16 @@
 import React, { FC, useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store/reducers';
+import { getTradesList } from 'store/selectors/tradesSelectors';
+import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
 import DialogCard from '../DialogCard';
 
 import './style.css';
 
 const DialogsList: FC = () => {
-  const trades = useSelector((state: RootState) => state.trades.items);
-  const currentTrade = useSelector(
-    (state: RootState) => state.currentTrade.item,
-  );
+  const trades = useSelector(getTradesList);
+  const currentTrade = useSelector(getCurrentTrade);
+
   const [selected, setSelected] = useState<string>();
 
   useEffect(() => {

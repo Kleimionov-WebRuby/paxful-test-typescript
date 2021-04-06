@@ -5,7 +5,7 @@ import { getTrades } from 'store/actions/tradesActions';
 import Hidden from '@material-ui/core/Hidden';
 import 'simplebar';
 import 'simplebar/dist/simplebar.min.css';
-import { RootState } from 'store/reducers';
+import { getTradesList } from 'store/selectors/tradesSelectors';
 import {
   DialogsList,
   DialogBox,
@@ -19,7 +19,7 @@ import './style.css';
 const TradesDialogs: React.FC = () => {
   const dispatch = useDispatch();
 
-  const trades = useSelector((state: RootState) => state.trades.items);
+  const trades = useSelector(getTradesList);
 
   useEffect(() => {
     dispatch(getTrades(`http://localhost:3000/dialogsItems.json`));

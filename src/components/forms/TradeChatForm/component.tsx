@@ -1,16 +1,16 @@
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 
 import Input from 'components/controls/Input';
 import SubmitPreloader from 'components/controls/SubmitPreloader';
-import { RootState } from 'store/reducers';
+import { tradesIsMessageSending } from 'store/selectors/tradesSelectors';
 
 import './style.css';
 
 type Props = {
   message: string,
-  handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
-  handleFieldChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  handleFormSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
+  handleFieldChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
 };
 
 const TradeChatForm = ({
@@ -18,26 +18,10 @@ const TradeChatForm = ({
   handleFormSubmit,
   handleFieldChange,
 }: Props) => {
-  const chatBottomRef = useRef<HTMLFormElement>(null);
-
-  const isSendingMessage = useSelector(
-    (state: RootState) => state.trades.isSendingMessage,
-  );
-
-  useEffect(() => {
-    if (chatBottomRef.current) {
-      chatBottomRef.current.scrollIntoView({
-        behavior: 'auto',
-      });
-    }
-  }, []);
+  const isSendingMessage = useSelector(tradesIsMessageSending);
 
   return (
-    <form
-      ref={chatBottomRef}
-      className="trade-chat__input-wrap"
-      onSubmit={handleFormSubmit}
-    >
+    <form className="trade-chat__input-wrap" onSubmit={handleFormSubmit}>
       <Input
         type="text"
         name="message"

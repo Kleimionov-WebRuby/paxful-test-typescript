@@ -7,7 +7,9 @@ import {
   sendMessage,
   changeMessageStatusOnRead,
 } from 'store/actions/messageAction';
-import { RootState } from 'store/reducers';
+import { tradesError } from 'store/selectors/tradesSelectors';
+import { getAccount } from 'store/selectors/accountSelector';
+import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
 import { Message as MessageType } from 'entries/trade';
 import useInput from 'hooks/useInput';
 import TradeChatForm from 'components/forms/TradeChatForm';
@@ -24,11 +26,9 @@ const DialogBoxBody: FC = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
 
-  const account = useSelector((state: RootState) => state.account);
-  const errors = useSelector((state: RootState) => state.trades.errors);
-  const currentTrade = useSelector(
-    (state: RootState) => state.currentTrade.item,
-  );
+  const account = useSelector(getAccount);
+  const errors = useSelector(tradesError);
+  const currentTrade = useSelector(getCurrentTrade);
 
   const { messages, interlocutorAvatar, avatar } = currentTrade;
   const shallowCopyNewMessages: { [key: string]: boolean } =

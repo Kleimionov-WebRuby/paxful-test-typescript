@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { SELLER_TYPE } from 'constants/account';
 import { Message as MessageType } from 'entries/trade';
-import { RootState } from 'store/reducers';
+import { getAccount } from 'store/selectors/accountSelector';
 
 import './style.css';
 
@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Message: FC<Props> = ({ message, avatar, interlocutorAvatar }) => {
-  const account = useSelector((state: RootState) => state.account);
+  const account = useSelector(getAccount);
   const { type, text, date } = message;
   const avatarImgLink = type === SELLER_TYPE ? avatar : interlocutorAvatar;
 

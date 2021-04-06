@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { SELLER_TYPE } from 'constants/account';
 import UserAvatar from '../UserAvatar';
 import { Trade } from 'entries/trade';
-import { RootState } from 'store/reducers';
+import { getAccount } from 'store/selectors/accountSelector';
 
 import './style.css';
 
@@ -22,7 +22,7 @@ const DialogCard: FC<Props> = ({ item, isActive }) => {
     name,
     newMessage,
   } = item;
-  const account = useSelector((state: RootState) => state.account);
+  const account = useSelector(getAccount);
   const avatarImgLink = account === SELLER_TYPE ? interlocutorAvatar : avatar;
   const shallowCopyNewMessages: { [key: string]: boolean } = newMessage;
 
