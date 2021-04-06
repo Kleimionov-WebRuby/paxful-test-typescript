@@ -11,11 +11,14 @@ import {
 } from 'store/selectors/currentTradeSelectors';
 import { getTradesList, getTradeById } from 'store/selectors/tradesSelectors';
 
+import { useClasses } from './style';
+
 type Props = {
   children: ReactNode,
 };
 
 const TradeWrap: FC<Props> = ({ children }) => {
+  const classes = useClasses();
   const dispatch = useDispatch();
   const { id } = useParams<{ id: string }>();
 
@@ -38,7 +41,7 @@ const TradeWrap: FC<Props> = ({ children }) => {
   if (isObjectEmpty(currentTrade)) return <Loader />;
 
   return (
-    <div className="trade-message-box__info">
+    <div className={classes.tradeMessageBoxInfo}>
       {isLoading && !isObjectEmpty(currentTrade) ? <Loader /> : null}
       {children}
     </div>

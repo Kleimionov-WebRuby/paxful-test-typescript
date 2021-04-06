@@ -11,14 +11,14 @@ import {
 } from '../../constants/actionTypes';
 import { Trade } from 'entries/trade';
 import { TradeState } from 'store/models';
-import { TradesActionTypes } from 'store/interfaces/TradesActionTypes';
+import { TradesActionTypes } from 'store/interfaces/tradesActionTypes';
 import { SendMessageRequestActionType } from 'store/interfaces/sendMessageRequestActionType';
 
 type Action = TradesActionTypes | SendMessageRequestActionType;
 
 const initialState: TradeState = {
   items: [],
-  isLoading: false,
+  isLoading: true,
   errors: [],
   isSendingMessage: false,
 };

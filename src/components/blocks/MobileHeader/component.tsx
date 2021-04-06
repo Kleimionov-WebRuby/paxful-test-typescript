@@ -7,7 +7,7 @@ import { drawerWidth } from 'constants/index';
 import DialogsList from 'components/blocks/DialogsList';
 import DialogDetails from 'components/blocks/DialogDetails';
 
-import './style.css';
+import { useClasses } from './style';
 
 type Anchor = 'left' | 'right';
 
@@ -18,6 +18,7 @@ const DrawerComponent = withStyles(() => ({
 }))(Drawer);
 
 const MobileHeader: React.FC = () => {
+  const classes = useClasses();
   const [state, setState] = useState({ left: false, right: false });
 
   const toggleDrawer = (anchor: Anchor, isDrawerOpen: boolean) => () => {
@@ -25,9 +26,9 @@ const MobileHeader: React.FC = () => {
   };
 
   return (
-    <div className="mobile-header">
+    <div className={classes.mobileHeader}>
       <IconButton onClick={toggleDrawer('left', true)} className="">
-        <MenuIcon />
+        <MenuIcon className={classes.icon} />
       </IconButton>
       <DrawerComponent
         anchor="left"
@@ -37,7 +38,7 @@ const MobileHeader: React.FC = () => {
         <DialogsList />
       </DrawerComponent>
       <IconButton onClick={toggleDrawer('right', true)} className="">
-        <InfoIcon />
+        <InfoIcon className={classes.icon} />
       </IconButton>
 
       <DrawerComponent
@@ -45,7 +46,7 @@ const MobileHeader: React.FC = () => {
         open={state.right}
         onClick={toggleDrawer('right', false)}
       >
-        <div className="trades-dialogs__details mobile">
+        <div className={classes.tradesDialogsDetails}>
           <DialogDetails />
         </div>
       </DrawerComponent>

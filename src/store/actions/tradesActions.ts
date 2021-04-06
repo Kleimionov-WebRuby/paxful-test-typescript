@@ -7,7 +7,7 @@ import {
   CHANGE_TRADE_STATUS,
 } from 'constants/actionTypes';
 import delayForResponse from 'helper/delayForResponse';
-import { TradesActionTypes } from 'store/interfaces/TradesActionTypes';
+import { TradesActionTypes } from 'store/interfaces/tradesActionTypes';
 
 export type Args = {
   tradeId: number | string,
@@ -49,7 +49,7 @@ export const getTrades = (url: string) => async (dispatch: any) => {
 
   if (!response.ok) return dispatch(getTradesError(response.statusText));
 
-  const result: Array<Trade> = await response.json();
+  const result = await response.json();
 
   return dispatch(getTradesSuccess(result));
 };

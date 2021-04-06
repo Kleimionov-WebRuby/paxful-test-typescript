@@ -5,7 +5,8 @@ import UserAvatar from '../UserAvatar';
 import { Trade } from 'entries/trade';
 import { getAccount } from 'store/selectors/accountSelector';
 
-import './style.css';
+import { useClasses } from './style';
+import clsx from 'clsx';
 
 type Props = {
   item: Trade,
@@ -13,7 +14,8 @@ type Props = {
 };
 
 const DialogCard: FC<Props> = ({ item, isActive }) => {
-  let cardClasses = '';
+  const classes = useClasses();
+
   const {
     isPaid,
     avatar,
@@ -26,28 +28,27 @@ const DialogCard: FC<Props> = ({ item, isActive }) => {
   const avatarImgLink = account === SELLER_TYPE ? interlocutorAvatar : avatar;
   const shallowCopyNewMessages: { [key: string]: boolean } = newMessage;
 
-  if (isActive) cardClasses += ' active';
-  if (shallowCopyNewMessages[account]) cardClasses += ' new-message';
-
   return (
     <>
-      <li className={`trades-card${cardClasses}`}>
-        <div className="trades-card__info">
-          <div className="trades-card__how-buy">
+      <li
+        className={clsx(
+          classes.tradesCard,
+          isActive && classes.active,
+          shallowCopyNewMessages[account] && classes.newMessage,
+        )}
+      >
+        <div>
+          <div className={classes.tradesCardHowBuy}>
             {name} <span>is buying</span>
           </div>
-          <div className="trades-card__pay-method">{payMethod}</div>
-          <div className="trades-card__purchase-rate">
+          <div className={classes.tradesCardPayMethod}>{payMethod}</div>
+          <div className={classes.tradesCardPurchaseRate}>
             77 USD (0.00542345 BTC)
           </div>
         </div>
-        <div className="trades-card__owner">
+        <div className={classes.tradesCardOwner}>
           <UserAvatar imageLink={avatarImgLink} />
-          <span
-            className={`trades-card__operation-status trade-status ${
-              isPaid ? 'paid' : null
-            }`}
-          >
+          <span className={clsx(classes.tradeStatus, isPaid && classes.paid)}>
             {isPaid ? 'paid' : 'not paid'}
           </span>
         </div>

@@ -2,6 +2,7 @@ import React, { FC, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import clsx from 'clsx';
 
 import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
 import { changeTradeStatus } from 'store/actions/tradesActions';
@@ -14,9 +15,11 @@ import InfoField from 'components/controls/InfoField';
 import Button from 'components/controls/Button';
 import { getAccount } from 'store/selectors/accountSelector';
 
-import './style.css';
+import { useClasses } from './style';
 
 const DialogDetails: FC = () => {
+  const classes = useClasses();
+
   const account = useSelector(getAccount);
   const currentTrade = useSelector(getCurrentTrade);
   const dispatch = useDispatch();
@@ -38,9 +41,9 @@ const DialogDetails: FC = () => {
 
   return (
     <>
-      <div className="trades-dialogs__details-hearer">
+      <div className={classes.tradesDialogsDetailsHeader}>
         You are trading with <span>{name}</span>
-        <div className="trades-dialogs__start-time">
+        <div className={classes.tradesDialogsStartTime}>
           Started{' '}
           <Moment fromNow interval={10000}>
             {startAt}
@@ -49,14 +52,13 @@ const DialogDetails: FC = () => {
         {account === SELLER_TYPE && !isPaid && (
           <Button
             text="Release bitcoins"
-            customClass="grin-btn medium"
             onClick={handleOnClick}
             htmlType="button"
           />
         )}
         {account === SELLER_TYPE && isPaid && 'You are released bitcoins!'}
       </div>
-      <ul className="trades-dialogs__details-body">
+      <ul className={classes.tradesDialogsDetailsBody}>
         <li>
           <UserAvatar imageLink={avatar} />
           <Rating rating={rating} />
@@ -65,7 +67,7 @@ const DialogDetails: FC = () => {
         <InfoField
           name="Trade status"
           value={
-            <span className={`trade-status ${isPaid ? 'paid' : null}`}>
+            <span className={clsx(classes.tradeStatus, isPaid && classes.paid)}>
               {isPaid ? 'paid' : 'not paid'}
             </span>
           }
@@ -74,10 +76,10 @@ const DialogDetails: FC = () => {
         <InfoField name="Amount USD" value="25.00" />
         <InfoField name="Amount BTC" value="0.00234524" />
       </ul>
-      <div className="information-from-server">
+      <div className={classes.informationFromServer}>
         <FromServer />
       </div>
-      <div className="trades-dialogs__change-user">
+      <div className={classes.tradesDialogsChangeUser}>
         <ChangeUserButton />
       </div>
     </>

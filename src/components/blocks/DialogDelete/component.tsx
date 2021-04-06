@@ -9,12 +9,13 @@ import { deleteTrade } from 'store/actions/tradesActions';
 import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
 import { Trade } from 'entries/trade';
 
-import './style.css';
+import { useClasses } from './style';
 
 const DialogDelete: FC = () => {
-  const { id } = useParams<{ id: string }>();
   const { push } = useHistory();
+  const classes = useClasses();
   const dispatch = useDispatch();
+  const { id } = useParams<{ id: string }>();
 
   const trades = useSelector(getTradesList);
   const currentTrade = useSelector(getCurrentTrade);
@@ -32,8 +33,12 @@ const DialogDelete: FC = () => {
   }, [id, currentTrade.id, dispatch, filteredTrades, push]);
 
   return (
-    <span className="trash-dialog" role="button" onClick={handleDeleteTrade}>
-      <DeleteOutlineIcon />
+    <span
+      role="button"
+      className={classes.trashDialog}
+      onClick={handleDeleteTrade}
+    >
+      <DeleteOutlineIcon className={classes.icon} />
     </span>
   );
 };

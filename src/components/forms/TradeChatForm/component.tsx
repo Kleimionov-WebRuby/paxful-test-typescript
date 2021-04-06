@@ -5,7 +5,7 @@ import Input from 'components/controls/Input';
 import SubmitPreloader from 'components/controls/SubmitPreloader';
 import { tradesIsMessageSending } from 'store/selectors/tradesSelectors';
 
-import './style.css';
+import { useClasses } from './style';
 
 type Props = {
   message: string,
@@ -18,10 +18,11 @@ const TradeChatForm = ({
   handleFormSubmit,
   handleFieldChange,
 }: Props) => {
+  const classes = useClasses();
   const isSendingMessage = useSelector(tradesIsMessageSending);
 
   return (
-    <form className="trade-chat__input-wrap" onSubmit={handleFormSubmit}>
+    <form className={classes.tradeChatInputWrap} onSubmit={handleFormSubmit}>
       <Input
         type="text"
         name="message"
@@ -29,7 +30,7 @@ const TradeChatForm = ({
         placeholder="Type your message..."
         onInputChange={handleFieldChange}
       />
-      <button type="submit" className="trade-chat__submit">
+      <button type="submit" className={classes.tradeChatSubmit}>
         Send
       </button>
       {isSendingMessage && <SubmitPreloader />}

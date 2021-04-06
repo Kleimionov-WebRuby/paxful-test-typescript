@@ -1,22 +1,21 @@
 import React, { FC } from 'react';
 
-import './style.css';
+import { useClasses } from './style';
 
 type Props = {
-  customClass: string,
   text: string,
   onClick: any,
   htmlType: 'button' | 'submit' | 'reset',
 };
 
-const Button: FC<Props> = ({ customClass = '', text, onClick, htmlType }) => {
+const Button: FC<Props> = ({ text, onClick, htmlType = 'button' }) => {
+  const classes = useClasses();
+
   return (
-    <button type={htmlType} onClick={onClick} className={`btn ${customClass}`}>
+    <button type={htmlType} onClick={onClick} className={classes.btn}>
       {text}
     </button>
   );
 };
-
-Button.defaultProps = { htmlType: 'button' };
 
 export default Button;

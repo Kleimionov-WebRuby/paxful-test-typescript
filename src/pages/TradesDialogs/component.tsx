@@ -4,8 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Hidden from '@material-ui/core/Hidden';
 import 'simplebar/dist/simplebar.min.css';
 import 'simplebar';
+import clsx from 'clsx';
 
-import { getTradesList } from 'store/selectors/tradesSelectors';
+import {
+  getTradesList,
+  tradesIsLoading,
+} from 'store/selectors/tradesSelectors';
 import { getTrades } from 'store/actions/tradesActions';
 import {
   DialogsList,
@@ -15,7 +19,8 @@ import {
   TradeWrap,
   MobileHeader,
 } from 'components/blocks';
-import './style.css';
+import Loader from 'components/controls/Loader';
+import { useClasses } from './style';
 
 const TradesDialogs: React.FC = () => {
   const dispatch = useDispatch();
@@ -44,26 +49,40 @@ const TradesDialogs: React.FC = () => {
 export default TradesDialogs;
 
 const Layout: React.FC = () => {
+  const classes = useClasses();
+
+  const isLoading = useSelector(tradesIsLoading);
+
   return (
-    <main className="trades-dialogs-wrap">
-      <Hidden lgUp>
-        <MobileHeader />
-      </Hidden>
-      <Hidden mdDown>
-        <ScrollBlock className="trades-dialogs__items">
-          <DialogsList />
-        </ScrollBlock>
-      </Hidden>
-      <TradeWrap>
-        <ScrollBlock className="trades-dialogs__massage-wrap">
-          <DialogBox />
-        </ScrollBlock>
+    <>
+      {isLoading && <Loader />}
+      <main className={classes.tradesDialogsWrap}>
+        <Hidden lgUp>
+          <MobileHeader />
+        </Hidden>
         <Hidden mdDown>
-          <ScrollBlock className="trades-dialogs__details">
-            <DialogDetails />
+          <ScrollBlock
+            className={clsx(classes.tradesDialogsItems, classes.shadowBlock)}
+          >
+            <DialogsList />
           </ScrollBlock>
         </Hidden>
-      </TradeWrap>
-    </main>
+        <TradeWrap>
+          <ScrollBlock className={classes.tradesDialogsMassageWrap}>
+            <DialogBox />
+          </ScrollBlock>
+          <Hidden mdDown>
+            <ScrollBlock
+              className={clsx(
+                classes.tradesDialogsDetails,
+                classes.shadowBlock,
+              )}
+            >
+              <DialogDetails />
+            </ScrollBlock>
+          </Hidden>
+        </TradeWrap>
+      </main>
+    </>
   );
 };

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import './style.css';
+import { useClasses } from './style';
 
 type Props = {
   name: string,
@@ -17,17 +17,17 @@ const Input: FC<Props> = ({
   placeholder,
   onInputChange,
 }) => {
+  const classes = useClasses();
+
   return (
-    <div className="input-wrap">
-      <input
-        className="simple-input"
-        name={name}
-        type={type}
-        value={value}
-        placeholder={placeholder}
-        onChange={onInputChange}
-      />
-    </div>
+    <input
+      className={classes.simpleInput}
+      name={name}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      onChange={onInputChange}
+    />
   );
 };
 

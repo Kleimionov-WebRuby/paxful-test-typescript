@@ -16,7 +16,7 @@ import TradeChatForm from 'components/forms/TradeChatForm';
 import TransformDate from 'helper/transformDate';
 import Message from '../Message';
 
-import './style.css';
+import { useClasses } from './style';
 
 type FormI = {
   message: string,
@@ -24,6 +24,7 @@ type FormI = {
 
 const DialogBoxBody: FC = () => {
   const { id } = useParams<{ id: string }>();
+  const classes = useClasses();
   const dispatch = useDispatch();
 
   const account = useSelector(getAccount);
@@ -78,7 +79,7 @@ const DialogBoxBody: FC = () => {
 
   return (
     <>
-      <div className="chat-wrap">
+      <div className={classes.chatWrap}>
         {messages.map((message: MessageType) => (
           <Message
             message={message}

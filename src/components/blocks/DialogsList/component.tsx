@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { getTradesList } from 'store/selectors/tradesSelectors';
 import { getCurrentTrade } from 'store/selectors/currentTradeSelectors';
-import DialogCard from '../DialogCard';
-
-import './style.css';
+import DialogCard from 'components/blocks/DialogCard';
 
 const DialogsList: FC = () => {
   const trades = useSelector(getTradesList);
@@ -38,11 +36,7 @@ const DialogsList: FC = () => {
     );
   });
 
-  return (
-    <ul className="trade-dialog-list">
-      <div>{renderItems}</div>
-    </ul>
-  );
+  return <ul>{renderItems}</ul>;
 };
 
 export default DialogsList;

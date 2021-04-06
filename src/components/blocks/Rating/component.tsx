@@ -1,22 +1,24 @@
 import React, { FC } from 'react';
 
-import './style.css';
+import { useClasses } from './style';
 
 type Props = {
   rating: { good: number, bad: number },
 };
 
 const Rating: FC<Props> = ({ rating }) => {
+  const classes = useClasses();
+
   const { good, bad } = rating;
 
   return (
-    <div className="rating">
-      <span className="positive">
+    <div className={classes.rating}>
+      <span className={classes.positive}>
         {good === 0 ? '' : '+'}
         {good}
       </span>{' '}
       /{' '}
-      <span className="negative">
+      <span className={classes.negative}>
         {bad === 0 ? '' : '-'}
         {bad}
       </span>

@@ -83,3 +83,26 @@ ul li{
 	color: #9f9f9f;
 	font-size: 16px;
 }
+
+.simplebar-scrollbar:before{
+  background-color: #52d48c!important;
+  opacity: 1!important;
+}
+
+.simplebar-hover:before{
+  background-color: #5abd87!important;
+}
+
+.simplebar-placeholder{
+  width: 100%!important;
+}
+
+.Toastify__toast--error{
+  background-color: #c2485d!important;
+}
+
+@media (max-width: 430px) {
+	.MuiDrawer-paper {
+		max-width: 290px!important;
+	}
+}

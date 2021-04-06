@@ -9,6 +9,10 @@ export const getTradesList = createSelector(
   getTradesState,
   (state) => state.items,
 );
+export const tradesIsLoading = createSelector(
+  getTradesState,
+  (state) => state.isLoading,
+);
 export const tradesError = createSelector(
   getTradesState,
   (state) => state.errors,
