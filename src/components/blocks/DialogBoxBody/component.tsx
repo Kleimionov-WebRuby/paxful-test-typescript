@@ -2,7 +2,10 @@ import React, { FC, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { BUYER_TYPE, SELLER_TYPE } from 'constants/account';
-import { sendMessage, changeMessageStatusOnRead } from 'actions/messageAction';
+import {
+  sendMessage,
+  changeMessageStatusOnRead,
+} from 'store/actions/messageAction';
 import { Store } from 'entries/store';
 import { Message as MessageType } from 'entries/trade';
 import useInput from 'hooks/useInput';

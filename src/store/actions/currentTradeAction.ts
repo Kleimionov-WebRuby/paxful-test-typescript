@@ -2,9 +2,9 @@ import {
   SET_TRADE_REQUEST,
   SET_TRADE_SUCCESS,
   SET_TRADE_ERROR,
-} from '../constants/actionTypes';
-import { Args } from 'actions/tradesActions';
-import { Results } from 'actions/tradesActions'
+} from '../../constants/actionTypes';
+import { Args } from 'store/actions/tradesActions';
+import { Results } from 'store/actions/tradesActions'
 import { Trade } from 'entries/trade';
 
 type SetTradeRequestType = ({ tradeId, prevId }: Args) => Results;

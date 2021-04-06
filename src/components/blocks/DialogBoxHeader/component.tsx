@@ -1,8 +1,8 @@
 import React, { FC, useCallback } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import setCurrentTrade from 'actions/currentTradeAction';
-import { deleteTrade } from 'actions/tradesActions';
+import setCurrentTrade from 'store/actions/currentTradeAction';
+import { deleteTrade } from 'store/actions/tradesActions';
 import { Store } from 'entries/store';
 import { Trade } from 'entries/trade';
 import Rating from '../Rating';

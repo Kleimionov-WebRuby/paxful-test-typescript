@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrades } from 'actions/tradesActions';
+import { getTrades } from 'store/actions/tradesActions';
 import Hidden from '@material-ui/core/Hidden';
 import 'simplebar';
 import 'simplebar/dist/simplebar.min.css';
@@ -18,9 +18,10 @@ import Loader from 'components/controls/Loader';
 import './style.css';
 
 const TradesDialogs: React.FC = () => {
+  const dispatch = useDispatch();
+
   const isLoading = useSelector((state: Store) => state.trades.isLoading);
   const trades = useSelector((state: Store) => state.trades.items);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getTrades(`http://localhost:3000/dialogsItems.json`));

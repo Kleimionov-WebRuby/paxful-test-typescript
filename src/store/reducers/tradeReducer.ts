@@ -8,8 +8,8 @@ import {
   SEND_MESSAGE_ERROR,
   CHANGE_STATUS_ONREAD,
   CHANGE_TRADE_STATUS
-} from '../constants/actionTypes';
-import { Results } from 'actions/tradesActions';
+} from '../../constants/actionTypes';
+import { Results } from 'store/actions/tradesActions';
 import { Trade } from 'entries/trade';
 
 const initialState = {

@@ -5,8 +5,8 @@ import {
   GET_TRADES_ERROR,
   DELETE_TRADES,
   CHANGE_TRADE_STATUS,
-} from '../constants/actionTypes';
-import delayForResponse from '../helper/delayForResponse';
+} from '../../constants/actionTypes';
+import delayForResponse from '../../helper/delayForResponse';
 
 export type Args = {
   tradeId: string,

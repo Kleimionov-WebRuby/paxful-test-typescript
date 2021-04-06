@@ -1,6 +1,6 @@
 import { BUYER_TYPE, SELLER_TYPE } from 'constants/account';
 import { CHANGE_ACCOUNT } from 'constants/actionTypes';
-import { ChangeAccountType } from 'actions/accountAction';
+import { ChangeAccountType } from 'store/actions/accountAction';
 
 type Action = ChangeAccountType;
 const initialState = BUYER_TYPE;

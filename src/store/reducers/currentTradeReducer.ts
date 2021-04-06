@@ -2,8 +2,8 @@ import {
   SET_TRADE_REQUEST,
   SET_TRADE_SUCCESS,
   SET_TRADE_ERROR,
-} from '../constants/actionTypes';
-import { Results } from 'actions/tradesActions';
+} from '../../constants/actionTypes';
+import { Results } from 'store/actions/tradesActions';
 import { Trade } from 'entries/trade';
 
 const initialState = {

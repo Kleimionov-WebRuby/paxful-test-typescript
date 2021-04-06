@@ -3,11 +3,11 @@ import {
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE_ERROR,
   CHANGE_STATUS_ONREAD,
-} from '../constants/actionTypes';
+} from '../../constants/actionTypes';
 
-import { Args, Results } from 'actions/tradesActions'
+import { Args, Results } from 'store/actions/tradesActions'
 
-import delayForResponse from '../helper/delayForResponse';
+import delayForResponse from '../../helper/delayForResponse';
 
 type SendMessageRequestType = () => { type: string };
 type SendMessageSuccessType = ({ tradeId, message, account }: Args) => Results;

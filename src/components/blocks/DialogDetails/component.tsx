@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { SELLER_TYPE } from 'constants/account';
 import ChangeUserButton from 'components/blocks/ChangeUserButton';
 import Button from 'components/controls/Button';
-import { changeTradeStatus } from 'actions/tradesActions';
+import { changeTradeStatus } from 'store/actions/tradesActions';
 import FromServer from 'components/blocks/FromServer';
 import { Store } from 'entries/store';
 import Rating from '../Rating';
@@ -30,6 +30,7 @@ const DialogDetails: FC = () => {
 
   const handleOnClick = useCallback(() => {
     if (!isPaid) dispatch(changeTradeStatus(currentTrade.id));
+    // eslint-disable-next-line
   }, [currentTrade.id]);
 
   return (
