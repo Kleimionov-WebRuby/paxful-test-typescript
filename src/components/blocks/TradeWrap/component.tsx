@@ -2,7 +2,6 @@ import React, { FC, ReactNode, useEffect } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import setCurrentTrade from 'store/actions/currentTradeAction';
-import getTradeById from 'store/selectors';
 import isObjectEmpty from 'helper/isObjectEmpty';
 import Loader from 'components/controls/Loader';
 import { NOT_FOUND } from 'constants/index';
@@ -10,7 +9,7 @@ import {
   getCurrentTrade,
   getCurrentTradeIsLoading,
 } from 'store/selectors/currentTradeSelectors';
-import { getTradesList } from 'store/selectors/tradesSelectors';
+import { getTradesList, getTradeById } from 'store/selectors/tradesSelectors';
 
 type Props = {
   children: ReactNode,

@@ -2,62 +2,53 @@ import React, { useState } from 'react';
 import { Drawer, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import InfoIcon from '@material-ui/icons/Info';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { drawerWidth } from 'constants/index';
-import DialogsList from '../DialogsList';
-import DialogDetails from '../DialogDetails';
+import DialogsList from 'components/blocks/DialogsList';
+import DialogDetails from 'components/blocks/DialogDetails';
 
 import './style.css';
 
 type Anchor = 'left' | 'right';
 
-const useStyles = makeStyles(() => ({
-  drawerPaper: {
+const DrawerComponent = withStyles(() => ({
+  paper: {
     width: drawerWidth,
   },
-}));
+}))(Drawer);
 
 const MobileHeader: React.FC = () => {
-  const classes = useStyles();
-  const [isOpen, setIsOpen] = useState({ left: false, right: false });
+  const [state, setState] = useState({ left: false, right: false });
 
-  const handleDrawerToggle = (anchor: Anchor, isDrawerOpen: boolean) => {
-    setIsOpen({ ...isOpen, [anchor]: isDrawerOpen });
+  const toggleDrawer = (anchor: Anchor, isDrawerOpen: boolean) => () => {
+    setState({ ...state, [anchor]: isDrawerOpen });
   };
 
   return (
-    <div id="trade-mobile-header" className="mobile-header">
-      <IconButton onClick={() => handleDrawerToggle('left', true)} className="">
+    <div className="mobile-header">
+      <IconButton onClick={toggleDrawer('left', true)} className="">
         <MenuIcon />
       </IconButton>
-      <Drawer
+      <DrawerComponent
         anchor="left"
-        open={isOpen.left}
-        onClick={() => handleDrawerToggle('left', false)}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        open={state.left}
+        onClick={toggleDrawer('left', false)}
       >
         <DialogsList />
-      </Drawer>
-      <IconButton
-        onClick={() => handleDrawerToggle('right', true)}
-        className=""
-      >
+      </DrawerComponent>
+      <IconButton onClick={toggleDrawer('right', true)} className="">
         <InfoIcon />
       </IconButton>
-      <Drawer
+
+      <DrawerComponent
         anchor="right"
-        open={isOpen.right}
-        onClick={() => handleDrawerToggle('right', false)}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
+        open={state.right}
+        onClick={toggleDrawer('right', false)}
       >
         <div className="trades-dialogs__details mobile">
           <DialogDetails />
         </div>
-      </Drawer>
+      </DrawerComponent>
     </div>
   );
 };

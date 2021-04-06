@@ -1,7 +1,6 @@
 import { CHANGE_ACCOUNT } from 'constants/actionTypes';
+import { ChangeAccountType } from 'store/interfaces/accountActionsType';
 
-export type ChangeAccountType = {
-  type: string,
-};
-
-export const changeAccount = () => ({ type: CHANGE_ACCOUNT });
+export const changeAccount = (): ChangeAccountType => ({
+  type: CHANGE_ACCOUNT,
+});

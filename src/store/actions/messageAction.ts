@@ -3,37 +3,36 @@ import {
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE_ERROR,
   CHANGE_STATUS_ONREAD,
-} from '../../constants/actionTypes';
+} from 'constants/actionTypes';
 
-import { Args, Results } from 'store/actions/tradesActions'
+import { Args } from 'store/actions/tradesActions';
 
-import delayForResponse from '../../helper/delayForResponse';
+import { SendMessageRequestActionType } from 'store/interfaces/sendMessageRequestActionType';
 
-type SendMessageRequestType = () => { type: string };
-type SendMessageSuccessType = ({ tradeId, message, account }: Args) => Results;
-type SendMessageErrorType = (
-  payload: string,
-) => {
-  type: string,
-  payload: string,
-};
-type ChangeMessageStatus = ( tradeId: string, account: string) => Results;
+import delayForResponse from 'helper/delayForResponse';
 
-const sendMessageRequest: SendMessageRequestType = () => ({
+const sendMessageRequest = (): SendMessageRequestActionType => ({
   type: SEND_MESSAGE_REQUEST,
 });
 
-const sendMessageSuccess: SendMessageSuccessType = ({ tradeId, message, account }) => ({
+const sendMessageSuccess = ({
+  tradeId,
+  message,
+  account,
+}: Args): SendMessageRequestActionType => ({
   type: SEND_MESSAGE_SUCCESS,
   payload: { tradeId, message, account },
 });
 
-const sendMessageError: SendMessageErrorType = (payload) => ({
+const sendMessageError = (payload: string): SendMessageRequestActionType => ({
   type: SEND_MESSAGE_ERROR,
   payload,
 });
 
-export const changeMessageStatusOnRead: ChangeMessageStatus = (tradeId, account) => ({
+export const changeMessageStatusOnRead = (
+  tradeId: string,
+  account: string,
+): SendMessageRequestActionType => ({
   type: CHANGE_STATUS_ONREAD,
   payload: { tradeId, account },
 });

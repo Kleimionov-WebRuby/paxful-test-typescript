@@ -7,30 +7,34 @@ import {
   SEND_MESSAGE_SUCCESS,
   SEND_MESSAGE_ERROR,
   CHANGE_STATUS_ONREAD,
-  CHANGE_TRADE_STATUS
+  CHANGE_TRADE_STATUS,
 } from '../../constants/actionTypes';
-import { Results } from 'store/actions/tradesActions';
 import { Trade } from 'entries/trade';
+import { TradeState } from 'store/models';
+import { TradesActionTypes } from 'store/interfaces/TradesActionTypes';
+import { SendMessageRequestActionType } from 'store/interfaces/sendMessageRequestActionType';
 
-const initialState = {
+type Action = TradesActionTypes | SendMessageRequestActionType;
+
+const initialState: TradeState = {
   items: [],
   isLoading: false,
   errors: [],
   isSendingMessage: false,
 };
 
-type Action = Results;
-type Reducer = (state: any, action: Action) => { items: Array<Trade>, isLoading: boolean,errors: Array<string>, isSendingMessage: boolean };
-
-const getTrade = (state: any, action: Action) => {
-  return state.find((trade: Trade) => trade.id === action.payload.tradeId);
+const getTrade = (
+  state: Trade[],
+  tradeId: number | string,
+): Trade | undefined => {
+  return state.find((trade: Trade) => trade.id === tradeId);
 };
 
-const getTradeIndex = (state: any, action: Action) => {
-  return state.findIndex((trade: Trade) => trade.id === action.payload.tradeId);
+const getTradeIndex = (state: Trade[], tradeId: number | string): number => {
+  return state.findIndex((trade: Trade) => trade.id === tradeId);
 };
 
-const trades: Reducer = (state = initialState, action) => {
+const trades = (state = initialState, action: Action): TradeState => {
   switch (action.type) {
     case GET_TRADES_REQUEST:
       return { ...state, isLoading: true };
@@ -42,7 +46,7 @@ const trades: Reducer = (state = initialState, action) => {
       return {
         ...state,
         items: state.items.filter(
-          (trade: Trade) => trade.id !== action.payload.tradeId,
+          (trade) => trade.id !== action.payload.tradeId,
         ),
       };
     case SEND_MESSAGE_REQUEST:
@@ -52,19 +56,21 @@ const trades: Reducer = (state = initialState, action) => {
       };
     case SEND_MESSAGE_SUCCESS: {
       const newTradesArray = [...state.items];
-      const trade = getTrade(newTradesArray, action);
-      const tradeIndex = getTradeIndex(newTradesArray, action);
+      const trade = getTrade(newTradesArray, action.payload.tradeId);
+      const tradeIndex = getTradeIndex(newTradesArray, action.payload.tradeId);
 
-      const newTrade = {
-        ...trade,
-        messages: [...trade.messages, action.payload.message],
-        newMessage: {
-          ...trade.newMessage,
-          [action.payload.account as string]: true,
-        },
-      };
+      if (trade) {
+        const newTrade = {
+          ...trade,
+          messages: [...trade.messages, action.payload.message],
+          newMessage: {
+            ...trade.newMessage,
+            [action.payload.account]: true,
+          },
+        };
 
-      newTradesArray.splice(tradeIndex, 1, newTrade);
+        newTradesArray.splice(tradeIndex, 1, newTrade);
+      }
 
       return { ...state, items: newTradesArray, isSendingMessage: false };
     }
@@ -76,32 +82,49 @@ const trades: Reducer = (state = initialState, action) => {
       };
     case CHANGE_STATUS_ONREAD: {
       const newTradesArray = [...state.items];
-      const tradeOnRead = getTrade(newTradesArray, action);
-      const tradeOnReadIndex = getTradeIndex(newTradesArray, action);
-      const newTradeAfterOnRead = {
-        ...tradeOnRead,
-        newMessage: {
-          ...tradeOnRead.newMessage,
-          [action.payload.account as string]: false,
-        },
-      };
+      const tradeOnRead = getTrade(newTradesArray, action.payload.tradeId);
+      const tradeOnReadIndex = getTradeIndex(
+        newTradesArray,
+        action.payload.tradeId,
+      );
 
-      newTradesArray.splice(tradeOnReadIndex, 1, newTradeAfterOnRead);
+      if (tradeOnRead) {
+        const newTradeAfterOnRead = {
+          ...tradeOnRead,
+          newMessage: {
+            ...tradeOnRead.newMessage,
+            [action.payload.account]: false,
+          },
+        };
+
+        newTradesArray.splice(tradeOnReadIndex, 1, newTradeAfterOnRead);
+      }
 
       return { ...state, items: newTradesArray };
     }
     case CHANGE_TRADE_STATUS: {
       const newTradesArray = [...state.items];
-      const tradeWithNewStatus = getTrade(newTradesArray, action);
-      const tradeWithNewStatusIndex = getTradeIndex(newTradesArray, action);
-      const newTradeAfterChangeStatus = {
-        ...tradeWithNewStatus,
-        isPaid: !tradeWithNewStatus.isPaid,
-      };
+      const tradeWithNewStatus = getTrade(
+        newTradesArray,
+        action.payload.tradeId,
+      );
+      const tradeWithNewStatusIndex = getTradeIndex(
+        newTradesArray,
+        action.payload.tradeId,
+      );
+      if (tradeWithNewStatus) {
+        const newTradeAfterChangeStatus = {
+          ...tradeWithNewStatus,
+          isPaid: !tradeWithNewStatus.isPaid,
+        };
 
-      newTradesArray.splice(tradeWithNewStatusIndex, 1, newTradeAfterChangeStatus);
-
-      return{ ...state, items: newTradesArray }
+        newTradesArray.splice(
+          tradeWithNewStatusIndex,
+          1,
+          newTradeAfterChangeStatus,
+        );
+      }
+      return { ...state, items: newTradesArray };
     }
     default:
       return state;

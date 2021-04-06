@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTrades } from 'store/actions/tradesActions';
 import Hidden from '@material-ui/core/Hidden';
-import 'simplebar';
 import 'simplebar/dist/simplebar.min.css';
+import 'simplebar';
+
 import { getTradesList } from 'store/selectors/tradesSelectors';
+import { getTrades } from 'store/actions/tradesActions';
 import {
   DialogsList,
   DialogBox,
@@ -22,43 +23,47 @@ const TradesDialogs: React.FC = () => {
   const trades = useSelector(getTradesList);
 
   useEffect(() => {
-    dispatch(getTrades(`http://localhost:3000/dialogsItems.json`));
+    dispatch(getTrades(`${process.env.PUBLIC_URL}/dialogsItems.json`));
     // eslint-disable-next-line
   }, []);
 
   return (
-    <>
-      <Hidden lgUp>
-        <MobileHeader />
-      </Hidden>
-      <div className="trades-dialogs-wrap">
-        <Hidden mdDown>
-          <ScrollBlock className="trades-dialogs__items">
-            <DialogsList />
-          </ScrollBlock>
-        </Hidden>
-        <Switch>
-          {trades.length && (
-            <Route exact path="/">
-              <Redirect to={`/${trades[0].id}`} />
-            </Route>
-          )}
-          <Route path="/:id">
-            <TradeWrap>
-              <ScrollBlock className="trades-dialogs__massage-wrap">
-                <DialogBox />
-              </ScrollBlock>
-              <Hidden mdDown>
-                <ScrollBlock className="trades-dialogs__details">
-                  <DialogDetails />
-                </ScrollBlock>
-              </Hidden>
-            </TradeWrap>
-          </Route>
-        </Switch>
-      </div>
-    </>
+    <Switch>
+      {trades.length && (
+        <Route exact path="/">
+          <Redirect to={`/${trades[0].id}`} />
+        </Route>
+      )}
+      <Route path="/:id">
+        <Layout />
+      </Route>
+    </Switch>
   );
 };
 
 export default TradesDialogs;
+
+const Layout: React.FC = () => {
+  return (
+    <main className="trades-dialogs-wrap">
+      <Hidden lgUp>
+        <MobileHeader />
+      </Hidden>
+      <Hidden mdDown>
+        <ScrollBlock className="trades-dialogs__items">
+          <DialogsList />
+        </ScrollBlock>
+      </Hidden>
+      <TradeWrap>
+        <ScrollBlock className="trades-dialogs__massage-wrap">
+          <DialogBox />
+        </ScrollBlock>
+        <Hidden mdDown>
+          <ScrollBlock className="trades-dialogs__details">
+            <DialogDetails />
+          </ScrollBlock>
+        </Hidden>
+      </TradeWrap>
+    </main>
+  );
+};

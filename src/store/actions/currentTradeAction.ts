@@ -2,31 +2,24 @@ import {
   SET_TRADE_REQUEST,
   SET_TRADE_SUCCESS,
   SET_TRADE_ERROR,
-} from '../../constants/actionTypes';
+} from 'constants/actionTypes';
 import { Args } from 'store/actions/tradesActions';
-import { Results } from 'store/actions/tradesActions'
+import { CurrentTradeActionsType } from 'store/interfaces/currentTradeActionsType';
 import { Trade } from 'entries/trade';
 
-type SetTradeRequestType = ({ tradeId, prevId }: Args) => Results;
-type SetTradeSuccessType = (trade: Trade) => { type: string, payload: Trade}
-type SetTradeErrorType = (
-  payload: string,
-) => {
-  type: string,
-  payload: string,
-};
-
-const setTradeRequest: SetTradeRequestType = (payload) => ({
+const setTradeRequest = (
+  payload: Pick<Args, 'tradeId' | 'prevId'>,
+): CurrentTradeActionsType => ({
   type: SET_TRADE_REQUEST,
   payload,
 });
 
-const setTradeSuccess: SetTradeSuccessType = (payload) => ({
+const setTradeSuccess = (payload: Trade): CurrentTradeActionsType => ({
   type: SET_TRADE_SUCCESS,
   payload,
 });
 
-const setTradeError:SetTradeErrorType = (payload) => ({
+const setTradeError = (payload: string): CurrentTradeActionsType => ({
   type: SET_TRADE_ERROR,
   payload,
 });

@@ -1,65 +1,41 @@
-import { Trade } from 'entries/trade';
+import { Message, Trade } from 'entries/trade';
 import {
   GET_TRADES_REQUEST,
   GET_TRADES_SUCCESS,
   GET_TRADES_ERROR,
   DELETE_TRADES,
   CHANGE_TRADE_STATUS,
-} from '../../constants/actionTypes';
-import delayForResponse from '../../helper/delayForResponse';
+} from 'constants/actionTypes';
+import delayForResponse from 'helper/delayForResponse';
+import { TradesActionTypes } from 'store/interfaces/TradesActionTypes';
 
 export type Args = {
-  tradeId: string,
-  message?: {
-    id: number,
-    text: string,
-    type: string,
-    date: string,
-  },
-  account?: string,
+  tradeId: number | string,
+  message: Message,
+  account: string,
   prevId?: string,
 };
 
-export type Results = {
-  type: string,
-  payload: Args,
-};
-
-type GetTradesRequestType = () => { type: string };
-type GetTradesSuccessType = (
-  payload: Array<Trade>,
-) => {
-  type: string,
-  payload: Array<Trade>,
-};
-type GetTradesErrorType = (
-  payload: string,
-) => {
-  type: string,
-  payload: string,
-};
-type TypeOnlyWithId = (payload: string) => Results;
-
-const getTradesRequest: GetTradesRequestType = () => ({
+const getTradesRequest = (): TradesActionTypes => ({
   type: GET_TRADES_REQUEST,
 });
 
-const getTradesSuccess: GetTradesSuccessType = (payload) => ({
+const getTradesSuccess = (payload: Trade[]): TradesActionTypes => ({
   type: GET_TRADES_SUCCESS,
   payload,
 });
 
-const getTradesError: GetTradesErrorType = (payload) => ({
+const getTradesError = (payload: string): TradesActionTypes => ({
   type: GET_TRADES_ERROR,
   payload,
 });
 
-export const deleteTrade: TypeOnlyWithId = (payload) => ({
+export const deleteTrade = (payload: string): TradesActionTypes => ({
   type: DELETE_TRADES,
   payload: { tradeId: payload },
 });
 
-export const changeTradeStatus: TypeOnlyWithId = (payload) => ({
+export const changeTradeStatus = (payload: string): TradesActionTypes => ({
   type: CHANGE_TRADE_STATUS,
   payload: { tradeId: payload },
 });

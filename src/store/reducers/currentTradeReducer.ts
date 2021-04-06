@@ -2,27 +2,21 @@ import {
   SET_TRADE_REQUEST,
   SET_TRADE_SUCCESS,
   SET_TRADE_ERROR,
-} from '../../constants/actionTypes';
-import { Results } from 'store/actions/tradesActions';
-import { Trade } from 'entries/trade';
+} from 'constants/actionTypes';
+import { CurrentTradeState } from 'store/models/currentTradeModel';
+import { CurrentTradeActionsType } from 'store/interfaces/currentTradeActionsType';
+import { initialTrade } from 'constants/trade';
 
-const initialState = {
-  item: {},
+const initialState: CurrentTradeState = {
+  item: initialTrade,
   isLoading: false,
-  errors: [],
+  error: '',
 };
 
-type Action = Results;
-type Reducer = (
-  state: any,
-  action: Action,
-) => {
-  item: Trade,
-  isLoading: boolean,
-  errors: Array<string>,
-};
-
-const currentTrade: Reducer = (state = initialState, action) => {
+const currentTrade = (
+  state = initialState,
+  action: CurrentTradeActionsType,
+): CurrentTradeState => {
   switch (action.type) {
     case SET_TRADE_REQUEST: {
       return {
@@ -31,7 +25,7 @@ const currentTrade: Reducer = (state = initialState, action) => {
       };
     }
     case SET_TRADE_ERROR: {
-      return { ...state, errors: action.payload, isLoading: false };
+      return { ...state, error: action.payload, isLoading: false };
     }
     case SET_TRADE_SUCCESS: {
       return {
