@@ -1,4 +1,4 @@
-# Paxful Training Project
+# Training Project
 ---
 This test application was created using technologies such as: **_JavaScript_**, **_React_**, **_Redux_**, **_TypeScript_**, **_Material-UI_** and more.
 
@@ -9,14 +9,14 @@ This test application was created using technologies such as: **_JavaScript_**, 
 Application requires [Node.js](https://nodejs.org/) v10+ to run.
 
 ```sh
- $ git clone https://github.com/Kleimionov-WebRuby/paxful-test-typescript.git
+ $ git clone https://github.com/Kleimionov-WebRuby/training-typescript-project.git
 ```
-Or [Download the latest release.](https://github.com/Kleimionov-WebRuby/paxful-test-typescript/archive/master.zip)
+Or [Download the latest release.](https://github.com/Kleimionov-WebRuby/training-typescript-project/archive/master.zip)
 
 Install the dependencies and devDependencies and start the app.
 
 ```sh
-cd paxful-test-typescript
+cd training-typescript-project
 npm i
 npm start
 ```
