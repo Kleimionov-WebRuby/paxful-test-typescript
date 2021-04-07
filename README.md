@@ -1,6 +1,6 @@
 # Paxful Training Project
 ---
-This is a test application for learning technologies such as: **_JavaScript_**, **_React_**, **_Redux_**, **_TypeScript_**, **_Material-UI_** and more.
+This test application was created using technologies such as: **_JavaScript_**, **_React_**, **_Redux_**, **_TypeScript_**, **_Material-UI_** and more.
 
 ![Screenshot_2](https://user-images.githubusercontent.com/43369452/113816301-53594e80-977d-11eb-8bb0-016e50f3f98b.png)
 
